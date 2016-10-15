@@ -18,8 +18,4 @@ public class Application {
         SpringApplication.run(Application.class, args);
     }
 
-    @RequestMapping("/user")
-    public Principal user(Principal user) {
-        return user;
-    }
 }
