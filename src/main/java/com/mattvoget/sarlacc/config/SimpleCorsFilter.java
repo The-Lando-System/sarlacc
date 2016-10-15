@@ -2,7 +2,6 @@ package com.mattvoget.sarlacc.config;
 
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
-import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
@@ -13,12 +12,6 @@ import java.io.IOException;
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class SimpleCorsFilter implements Filter {
-
-
-    @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-
-    }
 
     @Override
     public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
@@ -34,11 +27,13 @@ public class SimpleCorsFilter implements Filter {
         } else {
             chain.doFilter(req, res);
         }
+    }
 
+    @Override
+    public void init(FilterConfig filterConfig) throws ServletException {
     }
 
     @Override
     public void destroy() {
-
     }
 }
