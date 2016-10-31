@@ -23,4 +23,9 @@ public class UserController {
         userLogger.logUserEvent(currentUser.getUsername(),UserController.class,"Returning User Details");
         return currentUser;
     }
+
+    @RequestMapping("/me")
+    public Principal user2(Principal principal) {
+      return principal;
+    }
 }

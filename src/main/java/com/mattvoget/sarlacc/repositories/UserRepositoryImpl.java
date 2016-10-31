@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
 import com.mattvoget.sarlacc.models.User;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public class UserRepositoryImpl implements UserRepositoryCustom {
 
@@ -15,6 +16,9 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
 	
 	@Autowired
     private MongoTemplate mongoTemplate;
+
+	@Autowired
+	private BCryptPasswordEncoder encoder;
 	
 	@Override
 	public User createAccount(User newAccount) {
@@ -27,7 +31,9 @@ public class UserRepositoryImpl implements UserRepositoryCustom {
 		if (user != null){
 			throw new RuntimeException("Username already exists!");
 		}
-		
+
+		newAccount.setPassword(encoder.encode(newAccount.getPassword()));
+
 		mongoTemplate.insert(newAccount, "user");
 		return null;
 	}
