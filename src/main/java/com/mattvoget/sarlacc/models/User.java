@@ -15,6 +15,7 @@ public class User implements UserDetails {
 	private String firstName;
 	private String lastName;
 	private String email;
+	private Role role;
 
 	public String getFirstName() {
 		return firstName;
@@ -46,6 +47,14 @@ public class User implements UserDetails {
 
 	public void setPassword(String password) {
         this.password = password;
+	}
+
+	public Role getRole(){
+		return role;
+	}
+
+	public void setRole(Role role){
+		this.role = role;
 	}
 
 	@Override

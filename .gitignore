@@ -5,3 +5,4 @@ sarlacc.iml
 sarlacc.ipr
 sarlacc.iws
 configure.properties
+application.properties
