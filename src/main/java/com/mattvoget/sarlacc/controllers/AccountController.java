@@ -14,6 +14,8 @@ import com.mattvoget.sarlacc.models.User;
 import com.mattvoget.sarlacc.repositories.UserRepository;
 import com.mattvoget.sarlacc.utils.UserActivityLogger;
 
+import java.util.List;
+
 @Controller
 @RequestMapping(value="account")
 public class AccountController extends ErrorHandlingController {
@@ -30,6 +32,13 @@ public class AccountController extends ErrorHandlingController {
 	@ResponseBody
 	public void createAccount(@RequestBody User newAccount) {
 		userRepo.createAccount(newAccount);
+	}
+
+	@PreAuthorize("@securityHelper.isAdmin()")
+	@RequestMapping(value="/", method=RequestMethod.GET)
+	@ResponseBody
+	public List<User> getUsers() {
+		return userRepo.findAll();
 	}
 	
 }
