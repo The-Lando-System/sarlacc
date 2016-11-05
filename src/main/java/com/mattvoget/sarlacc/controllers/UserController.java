@@ -1,8 +1,10 @@
 package com.mattvoget.sarlacc.controllers;
 
 import com.mattvoget.sarlacc.models.User;
+import com.mattvoget.sarlacc.security.SecurityHelper;
 import com.mattvoget.sarlacc.utils.UserActivityLogger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,6 +18,7 @@ public class UserController {
     @Autowired
     private UserActivityLogger userLogger;
 
+    @PreAuthorize("@securityHelper.hasAccess()")
     @RequestMapping("/user-details")
     public @ResponseBody User user(Principal user) {
         OAuth2Authentication auth = (OAuth2Authentication) user;
