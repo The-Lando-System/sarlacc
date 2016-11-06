@@ -31,6 +31,12 @@ public class AccountController extends ErrorHandlingController {
 		userRepo.createAccount(newAccount);
 	}
 
+	@RequestMapping(value="/", method=RequestMethod.PUT)
+	@ResponseBody
+	public void editAccount(@RequestBody User accountToEdit) {
+		userRepo.save(accountToEdit);
+	}
+
 	@PreAuthorize("@securityHelper.isAdmin()")
 	@RequestMapping(value="/", method=RequestMethod.GET)
 	@ResponseBody
