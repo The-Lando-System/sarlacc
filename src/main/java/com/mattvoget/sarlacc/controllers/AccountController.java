@@ -31,6 +31,7 @@ public class AccountController extends ErrorHandlingController {
 		userRepo.createAccount(newAccount);
 	}
 
+	@PreAuthorize("@securityHelper.isAdmin()")
 	@RequestMapping(value="/", method=RequestMethod.PUT)
 	@ResponseBody
 	public void editAccount(@RequestBody User accountToEdit) {
@@ -49,5 +50,12 @@ public class AccountController extends ErrorHandlingController {
 	@ResponseBody
 	public User getUserById(@PathVariable String id) {
 		return userRepo.findOne(id);
+	}
+
+	@PreAuthorize("@securityHelper.isAdmin()")
+	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
+	@ResponseBody
+	public void deleteAccount(@PathVariable String id) {
+		userRepo.delete(id);
 	}
 }
