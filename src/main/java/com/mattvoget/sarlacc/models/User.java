@@ -17,6 +17,10 @@ public class User implements UserDetails {
 	private String email;
 	private Role role;
 
+	public String getId() { return id; }
+
+	public void setId(String id) { this.id = id; }
+
 	public String getFirstName() {
 		return firstName;
 	}
