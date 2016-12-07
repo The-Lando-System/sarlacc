@@ -1,6 +1,6 @@
 package com.mattvoget.sarlacc.services;
 
-import com.mattvoget.sarlacc.models.User;
+import com.mattvoget.sarlacc.client.models.User;
 import com.mattvoget.sarlacc.repositories.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

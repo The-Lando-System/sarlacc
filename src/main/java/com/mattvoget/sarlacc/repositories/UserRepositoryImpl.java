@@ -1,5 +1,6 @@
 package com.mattvoget.sarlacc.repositories;
 
+import com.mattvoget.sarlacc.client.models.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +8,6 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 
-import com.mattvoget.sarlacc.models.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 public class UserRepositoryImpl implements UserRepositoryCustom {

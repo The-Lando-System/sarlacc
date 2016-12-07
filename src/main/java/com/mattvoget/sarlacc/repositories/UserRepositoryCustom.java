@@ -1,6 +1,6 @@
 package com.mattvoget.sarlacc.repositories;
 
-import com.mattvoget.sarlacc.models.User;
+import com.mattvoget.sarlacc.client.models.User;
 
 public interface UserRepositoryCustom {
 

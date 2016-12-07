@@ -1,7 +1,6 @@
 package com.mattvoget.sarlacc.controllers;
 
-import com.mattvoget.sarlacc.models.User;
-import com.mattvoget.sarlacc.security.SecurityHelper;
+import com.mattvoget.sarlacc.client.models.User;
 import com.mattvoget.sarlacc.utils.UserActivityLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -20,7 +19,8 @@ public class UserController {
 
     @PreAuthorize("@securityHelper.hasAccess()")
     @RequestMapping("/user-details")
-    public @ResponseBody User user(Principal user) {
+    public @ResponseBody
+    User user(Principal user) {
         OAuth2Authentication auth = (OAuth2Authentication) user;
         User currentUser = (User) auth.getUserAuthentication().getPrincipal();
         userLogger.logUserEvent(currentUser.getUsername(),UserController.class,"Returning User Details");
