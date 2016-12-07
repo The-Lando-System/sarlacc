@@ -1,7 +1,7 @@
 package com.mattvoget.sarlacc.security;
 
-import com.mattvoget.sarlacc.client.models.User;
-import com.mattvoget.sarlacc.client.models.Role;
+import com.mattvoget.sarlacc.models.User;
+import com.mattvoget.sarlacc.models.Role;
 import com.mattvoget.sarlacc.utils.UserActivityLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;

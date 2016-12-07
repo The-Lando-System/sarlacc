@@ -36,5 +36,5 @@ dependencies {
 	compile group: 'commons-codec', name: 'commons-codec', version: '1.2'
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
 
-    compile name: 'sarlacc-java-client/sarlacc-java-client-1.0'
+    compile name: 'sarlacc-model/sarlacc-model-1.0'
 }
