@@ -16,6 +16,7 @@ repositories {
     flatDir {
         dirs '../local-repo/'
     }
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -36,5 +37,5 @@ dependencies {
 	compile group: 'commons-codec', name: 'commons-codec', version: '1.2'
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
 
-    compile name: 'sarlacc-model/sarlacc-model-1.0'
+    compile 'com.github.The-Lando-System:sarlacc-model:-SNAPSHOT'
 }
