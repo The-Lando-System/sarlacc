@@ -1,7 +1,7 @@
 security:
   oauth2:
     client:
-      client-id: acme
-      client-secret: acmesecret
+      client-id: sarlacc
+      client-secret: deywannawanga
       scope: read,write
       auto-approve-scopes: '.*'
