@@ -1,10 +1,12 @@
 package com.mattvoget.sarlacc.controllers;
 
 import com.mattvoget.sarlacc.models.User;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +27,9 @@ public class AccountController extends ErrorHandlingController {
 	@Autowired
 	private UserRepository userRepo;
 
+	@Autowired
+	private BCryptPasswordEncoder encoder;
+
 	@RequestMapping(value="/", method=RequestMethod.POST)
 	@ResponseBody
 	public void createAccount(@RequestBody User newAccount) {
@@ -35,6 +40,9 @@ public class AccountController extends ErrorHandlingController {
 	@RequestMapping(value="/", method=RequestMethod.PUT)
 	@ResponseBody
 	public void editAccount(@RequestBody User accountToEdit) {
+		if (!StringUtils.isBlank(accountToEdit.getPassword())){
+			accountToEdit.setPassword(encoder.encode(accountToEdit.getPassword()));
+		}
 		userRepo.save(accountToEdit);
 	}
 
