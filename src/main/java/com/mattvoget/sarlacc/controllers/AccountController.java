@@ -42,6 +42,8 @@ public class AccountController extends ErrorHandlingController {
 	public void editAccount(@RequestBody User accountToEdit) {
 		if (!StringUtils.isBlank(accountToEdit.getPassword())){
 			accountToEdit.setPassword(encoder.encode(accountToEdit.getPassword()));
+		} else {
+			accountToEdit.setPassword(userRepo.findOne(accountToEdit.getId()).getPassword());
 		}
 		userRepo.save(accountToEdit);
 	}
