@@ -1,6 +1,8 @@
 package com.mattvoget.sarlacc.controllers;
 
+import com.mattvoget.sarlacc.exceptions.AuthenticationException;
 import com.mattvoget.sarlacc.models.User;
+import com.mattvoget.sarlacc.security.SecurityHelper;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +32,9 @@ public class AccountController extends ErrorHandlingController {
 	@Autowired
 	private BCryptPasswordEncoder encoder;
 
+    @Autowired
+    private SecurityHelper securityHelper;
+
 	@RequestMapping(value="/", method=RequestMethod.POST)
 	@ResponseBody
 	public void createAccount(@RequestBody User newAccount) {
@@ -45,6 +50,27 @@ public class AccountController extends ErrorHandlingController {
 		} else {
 			accountToEdit.setPassword(userRepo.findOne(accountToEdit.getId()).getPassword());
 		}
+		userRepo.save(accountToEdit);
+	}
+
+	@PreAuthorize("@securityHelper.hasAccess()")
+	@RequestMapping(value="/me/", method=RequestMethod.PUT)
+	@ResponseBody
+	public void editMyAccount(@RequestBody User accountToEdit) {
+
+        if (!StringUtils.equals(accountToEdit.getId(),securityHelper.getUser().getId())){
+            throw new AuthenticationException("Could not verify the account ID during account update!");
+        }
+
+		// Users can't update their own role. Set it to what it already was
+		accountToEdit.setRole(userRepo.findOne(accountToEdit.getId()).getRole());
+
+		if (!StringUtils.isBlank(accountToEdit.getPassword())){
+			accountToEdit.setPassword(encoder.encode(accountToEdit.getPassword()));
+		} else {
+			accountToEdit.setPassword(userRepo.findOne(accountToEdit.getId()).getPassword());
+		}
+
 		userRepo.save(accountToEdit);
 	}
 

@@ -25,7 +25,7 @@ public class SecurityHelper {
         return (Role.ADMIN == getUser().getRole());
     }
 
-    private User getUser(){
+    public User getUser(){
         return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
