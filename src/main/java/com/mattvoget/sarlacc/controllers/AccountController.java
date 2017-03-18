@@ -56,7 +56,7 @@ public class AccountController extends ErrorHandlingController {
 	@PreAuthorize("@securityHelper.hasAccess()")
 	@RequestMapping(value="/me/", method=RequestMethod.PUT)
 	@ResponseBody
-	public void editMyAccount(@RequestBody User accountToEdit) {
+	public User editMyAccount(@RequestBody User accountToEdit) {
 
         if (!StringUtils.equals(accountToEdit.getId(),securityHelper.getUser().getId())){
             throw new AuthenticationException("Could not verify the account ID during account update!");
@@ -71,7 +71,7 @@ public class AccountController extends ErrorHandlingController {
 			accountToEdit.setPassword(userRepo.findOne(accountToEdit.getId()).getPassword());
 		}
 
-		userRepo.save(accountToEdit);
+		return userRepo.save(accountToEdit);
 	}
 
 	@PreAuthorize("@securityHelper.isAdmin()")
