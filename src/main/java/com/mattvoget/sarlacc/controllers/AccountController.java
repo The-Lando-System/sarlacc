@@ -8,13 +8,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.provider.OAuth2Authentication;
+import org.springframework.security.oauth2.provider.OAuth2Request;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import com.mattvoget.sarlacc.repositories.UserRepository;
 import com.mattvoget.sarlacc.utils.UserActivityLogger;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -56,7 +62,7 @@ public class AccountController extends ErrorHandlingController {
 	@PreAuthorize("@securityHelper.hasAccess()")
 	@RequestMapping(value="/me/", method=RequestMethod.PUT)
 	@ResponseBody
-	public User editMyAccount(@RequestBody User accountToEdit) {
+	public User editMyAccount(Principal authUser, @RequestBody User accountToEdit) {
 
         if (!StringUtils.equals(accountToEdit.getId(),securityHelper.getUser().getId())){
             throw new AuthenticationException("Could not verify the account ID during account update!");
@@ -71,7 +77,12 @@ public class AccountController extends ErrorHandlingController {
 			accountToEdit.setPassword(userRepo.findOne(accountToEdit.getId()).getPassword());
 		}
 
-		return userRepo.save(accountToEdit);
+        User user = userRepo.save(accountToEdit);
+
+		// Clear the security context, force the user to log in again
+        SecurityContextHolder.getContext().setAuthentication(null);
+
+		return user;
 	}
 
 	@PreAuthorize("@securityHelper.isAdmin()")

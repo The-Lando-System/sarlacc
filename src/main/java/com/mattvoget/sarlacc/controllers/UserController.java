@@ -24,6 +24,7 @@ public class UserController {
         OAuth2Authentication auth = (OAuth2Authentication) user;
         User currentUser = (User) auth.getUserAuthentication().getPrincipal();
         userLogger.logUserEvent(currentUser.getUsername(),UserController.class,"Returning User Details");
+        currentUser.setPassword(null);
         return currentUser;
     }
 
