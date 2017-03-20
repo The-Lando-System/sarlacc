@@ -77,12 +77,7 @@ public class AccountController extends ErrorHandlingController {
 			accountToEdit.setPassword(userRepo.findOne(accountToEdit.getId()).getPassword());
 		}
 
-        User user = userRepo.save(accountToEdit);
-
-		// Clear the security context, force the user to log in again
-        SecurityContextHolder.getContext().setAuthentication(null);
-
-		return user;
+		return userRepo.save(accountToEdit);
 	}
 
 	@PreAuthorize("@securityHelper.isAdmin()")

@@ -1,6 +1,7 @@
 package com.mattvoget.sarlacc.controllers;
 
 import com.mattvoget.sarlacc.models.User;
+import com.mattvoget.sarlacc.repositories.UserRepository;
 import com.mattvoget.sarlacc.utils.UserActivityLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,15 +18,17 @@ public class UserController {
     @Autowired
     private UserActivityLogger userLogger;
 
+    @Autowired
+    private UserRepository userRepo;
+
     @PreAuthorize("@securityHelper.hasAccess()")
     @RequestMapping("/user-details")
     public @ResponseBody
-    User user(Principal user) {
-        OAuth2Authentication auth = (OAuth2Authentication) user;
+    User user(Principal prinUser) {
+        OAuth2Authentication auth = (OAuth2Authentication) prinUser;
         User currentUser = (User) auth.getUserAuthentication().getPrincipal();
         userLogger.logUserEvent(currentUser.getUsername(),UserController.class,"Returning User Details");
-        currentUser.setPassword(null);
-        return currentUser;
+        return userRepo.findOne(currentUser.getId());
     }
 
     @RequestMapping("/me")
