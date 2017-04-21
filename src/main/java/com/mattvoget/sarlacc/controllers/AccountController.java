@@ -32,6 +32,7 @@ public class AccountController extends ErrorHandlingController {
     @Autowired
     private SecurityHelper securityHelper;
 
+    @PreAuthorize("@securityHelper.isAdmin()")
 	@RequestMapping(value="/", method=RequestMethod.POST)
 	@ResponseBody
 	public void createAccount(@RequestBody User newAccount) {
