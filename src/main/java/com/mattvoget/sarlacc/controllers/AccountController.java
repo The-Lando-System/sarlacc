@@ -1,37 +1,28 @@
 package com.mattvoget.sarlacc.controllers;
 
-import com.mattvoget.sarlacc.exceptions.AuthenticationException;
-import com.mattvoget.sarlacc.models.User;
-import com.mattvoget.sarlacc.security.SecurityHelper;
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.oauth2.provider.OAuth2Authentication;
-import org.springframework.security.oauth2.provider.OAuth2Request;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
-
-import com.mattvoget.sarlacc.repositories.UserRepository;
-import com.mattvoget.sarlacc.utils.UserActivityLogger;
-
 import java.security.Principal;
 import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.mattvoget.sarlacc.exceptions.AuthenticationException;
+import com.mattvoget.sarlacc.models.User;
+import com.mattvoget.sarlacc.repositories.UserRepository;
+import com.mattvoget.sarlacc.security.SecurityHelper;
 
 @Controller
 @RequestMapping(value="account")
 public class AccountController extends ErrorHandlingController {
-	
-	private Logger log = LoggerFactory.getLogger(AccountController.class);
-	
-	@Autowired
-	private UserActivityLogger userLogger;
-	
+			
 	@Autowired
 	private UserRepository userRepo;
 
