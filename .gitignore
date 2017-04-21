@@ -1,6 +1,9 @@
 build
 .idea
 .gradle
+.classpath
+.project
+.settings
 sarlacc.iml
 sarlacc.ipr
 sarlacc.iws

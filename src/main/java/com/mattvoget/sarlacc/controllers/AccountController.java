@@ -54,7 +54,7 @@ public class AccountController extends ErrorHandlingController {
 	@RequestMapping(value="/me/", method=RequestMethod.PUT)
 	@ResponseBody
 	public User editMyAccount(Principal authUser, @RequestBody User accountToEdit) {
-
+		
         if (!StringUtils.equals(accountToEdit.getId(),securityHelper.getUser().getId())){
             throw new AuthenticationException("Could not verify the account ID during account update!");
         }
