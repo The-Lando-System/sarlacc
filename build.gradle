@@ -10,6 +10,7 @@ buildscript {
 apply plugin: 'java'
 apply plugin: 'spring-boot'
 apply plugin: 'idea'
+apply plugin: 'eclipse'
 
 repositories {
     mavenCentral()
