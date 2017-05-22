@@ -1,5 +1,6 @@
 package com.mattvoget.sarlacc.security;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -32,6 +33,10 @@ public class SecurityHelper {
     	User user = getUser();
     	AppRole appRole = appRoleService.getUserRoleForApp(user.getUsername(), "sarlacc");
     	return (Role.ADMIN == appRole.getRole());
+    }
+    
+    public boolean isTheSameUser(String username) {
+    	return StringUtils.equals(getUser().getUsername(), username);
     }
 
     public User getUser(){

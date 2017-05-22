@@ -17,7 +17,6 @@ import com.mattvoget.sarlacc.models.AppRole;
 import com.mattvoget.sarlacc.services.AppRoleService;
 
 @Controller
-@PreAuthorize("@securityHelper.isSarlaccAdmin()")
 @RequestMapping(value="app-role")
 public class AppRoleController {
 
@@ -35,12 +34,14 @@ public class AppRoleController {
 		return appRoleSvc.getAppRolesForUser(username);
 	}
 	
+	@PreAuthorize("@securityHelper.isSarlaccAdmin()")
 	@RequestMapping(value="/", method=RequestMethod.POST)
 	@ResponseBody
 	public AppRole getCreateUserRoleForApp(@RequestBody AppRole appRole) {
 		return appRoleSvc.createUserRoleForApp(appRole);
 	}
 	
+	@PreAuthorize("@securityHelper.isSarlaccAdmin()")
 	@RequestMapping(value="/{username}/{appName}", method=RequestMethod.DELETE)
 	@ResponseStatus(code=HttpStatus.OK)
 	public void deleteUserRoleForApp(@PathVariable String username, @PathVariable String appName) {
