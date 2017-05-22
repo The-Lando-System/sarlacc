@@ -18,14 +18,14 @@ public class AppRoleService {
 	@Autowired private SecurityHelper securityHelper;
 	
 	public AppRole getUserRoleForApp(String username, String appName) {
-		if (!securityHelper.isTheSameUser(username)){
+		if (!securityHelper.isTheSameUser(username) && !securityHelper.isSarlaccAdmin()){
 			throw new IllegalArgumentException("You do not have permission to check roles for " + username);
 		}		
 		return appRoleRepo.findByUsernameAndAppName(username, appName);
 	}
 	
 	public List<AppRole> getAppRolesForUser(String username) {
-		if (!securityHelper.isTheSameUser(username)){
+		if (!securityHelper.isTheSameUser(username) && !securityHelper.isSarlaccAdmin()){
 			throw new IllegalArgumentException("You do not have permission to check roles for " + username);
 		}
 		return appRoleRepo.findByUsername(username);
