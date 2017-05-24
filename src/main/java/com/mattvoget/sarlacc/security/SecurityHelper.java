@@ -22,12 +22,6 @@ public class SecurityHelper {
         userLogger.logUserEvent(user.getUsername(),SecurityHelper.class,"Checking access");
         return true;
     }
-
-    public boolean isAdmin(){
-        User user = getUser();
-        userLogger.logUserEvent(user.getUsername(),SecurityHelper.class,"Checking if user is admin");
-        return (Role.ADMIN == getUser().getRole());
-    }
     
     public boolean isSarlaccAdmin() {
     	User user = getUser();

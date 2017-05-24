@@ -32,14 +32,14 @@ public class AccountController extends ErrorHandlingController {
     @Autowired
     private SecurityHelper securityHelper;
 
-    @PreAuthorize("@securityHelper.isAdmin()")
+    @PreAuthorize("@securityHelper.isSarlaccAdmin()")
 	@RequestMapping(value="/", method=RequestMethod.POST)
 	@ResponseBody
 	public void createAccount(@RequestBody User newAccount) {
 		userRepo.createAccount(newAccount);
 	}
 
-	@PreAuthorize("@securityHelper.isAdmin()")
+	@PreAuthorize("@securityHelper.isSarlaccAdmin()")
 	@RequestMapping(value="/", method=RequestMethod.PUT)
 	@ResponseBody
 	public void editAccount(@RequestBody User accountToEdit) {
@@ -60,9 +60,6 @@ public class AccountController extends ErrorHandlingController {
             throw new AuthenticationException("Could not verify the account ID during account update!");
         }
 
-		// Users can't update their own role. Set it to what it already was
-		accountToEdit.setRole(userRepo.findOne(accountToEdit.getId()).getRole());
-
 		if (!StringUtils.isBlank(accountToEdit.getPassword())){
 			accountToEdit.setPassword(encoder.encode(accountToEdit.getPassword()));
 		} else {
@@ -72,21 +69,21 @@ public class AccountController extends ErrorHandlingController {
 		return userRepo.save(accountToEdit);
 	}
 
-	@PreAuthorize("@securityHelper.isAdmin()")
+	@PreAuthorize("@securityHelper.isSarlaccAdmin()")
 	@RequestMapping(value="/", method=RequestMethod.GET)
 	@ResponseBody
 	public List<User> getUsers() {
 		return userRepo.findAll();
 	}
 
-	@PreAuthorize("@securityHelper.isAdmin()")
+	@PreAuthorize("@securityHelper.isSarlaccAdmin()")
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	@ResponseBody
 	public User getUserById(@PathVariable String id) {
 		return userRepo.findOne(id);
 	}
 
-	@PreAuthorize("@securityHelper.isAdmin()")
+	@PreAuthorize("@securityHelper.isSarlaccAdmin()")
 	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
 	@ResponseBody
 	public void deleteAccount(@PathVariable String id) {
